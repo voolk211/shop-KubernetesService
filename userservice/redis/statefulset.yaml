@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: userservice-redis
+spec:
+  serviceName: userservice-redis-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userservice-redis
+  template:
+    metadata:
+      labels:
+        app: userservice-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: userservice-cache
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: userservice-cache
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 200Mi
