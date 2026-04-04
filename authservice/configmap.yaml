@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authservice-app-configmap
+data:
+  AUTH_SERVICE_PORT: "8080"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://authservice-postgres:5432/authservicedb"
+  SPRING_DATASOURCE_USERNAME: "user"
+  USER_SERVICE_URL: "http://userservice-app:8080"
+
+
