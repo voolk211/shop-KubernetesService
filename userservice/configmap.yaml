@@ -8,3 +8,4 @@ data:
   SPRING_DATASOURCE_USERNAME: "user"
   SPRING_REDIS_HOST: "userservice-redis"
   SPRING_REDIS_PORT: "6379"
+  GATEWAY_URL: "http://apigateway-app:8080"

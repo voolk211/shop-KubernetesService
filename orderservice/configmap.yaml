@@ -1,12 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: authservice-app-configmap
+  name: orderservice-app-configmap
 data:
-  AUTH_SERVICE_PORT: "8080"
-  SPRING_DATASOURCE_URL: "jdbc:postgresql://authservice-postgres:5432/authservicedb"
+  ORDER_SERVICE_PORT: "8080"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://orderservice-postgres:5432/orderservicedb"
   SPRING_DATASOURCE_USERNAME: "user"
   USER_SERVICE_URL: "http://userservice-app:8080"
   GATEWAY_URL: "http://apigateway-app:8080"
-
-
