@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authservice-app
+  name: apigatewayservice-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: authservice-app
+      app: apigatewayservice-app
   template:
     metadata:
       labels:
-        app: authservice-app
+        app: apigatewayservice-app
     spec:
       containers:
-        - name: authservice-app
-          image: authservice-app:latest
+        - name: apigatewayservice-app
+          image: apigatewayservice-app:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
           envFrom:
             - configMapRef:
-                name: authservice-app-configmap
+                name: apigatewayservice-app-configmap
             - secretRef:
-                name: authservice-app-secret
+                name: apigatewayservice-app-secret
           startupProbe:
             httpGet:
               path: /actuator/health/liveness

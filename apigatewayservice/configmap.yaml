@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apigatewayservice-app-configmap
+data:
+  SPRING_PROFILES_ACTIVE: "docker"
+  APIGATEWAY_SERVICE_PORT: "8080"
+  SPRING_REDIS_HOST: "apigatewayservice-redis"
+  SPRING_REDIS_PORT: "6379"
+  USER_SERVICE_URL: "http://userservice-app:8080"
+  AUTH_SERVICE_URL: "http://authservice-app:8080"
+  ORDER_SERVICE_URL: "http://orderservice-app:8080"
+  PAYMENT_SERVICE_URL: "http://paymentservice-app:8080"

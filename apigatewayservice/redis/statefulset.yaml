@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: apigatewayservice-redis
+spec:
+  serviceName: apigatewayservice-redis-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigatewayservice-redis
+  template:
+    metadata:
+      labels:
+        app: apigatewayservice-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: apigatewayservice-cache
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: apigatewayservice-cache
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 200Mi

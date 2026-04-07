@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: userservice-redis-headless
+  name: apigatewayservice-redis-headless
 spec:
   clusterIP: None
   selector:
-    app: userservice-redis
+    app: apigatewayservice-redis
   ports:
     - port: 6379
       targetPort: 6379
@@ -15,10 +15,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: userservice-redis
+  name: apigatewayservice-redis
 spec:
   selector:
-    app: userservice-redis
+    app: apigatewayservice-redis
   ports:
     - port: 6379
       targetPort: 6379
