@@ -18,6 +18,18 @@ spec:
           image: redis:7
           ports:
             - containerPort: 6379
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
           volumeMounts:
             - name: userservice-cache
               mountPath: /data

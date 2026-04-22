@@ -13,11 +13,25 @@ spec:
       labels:
         app: zookeeper
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: zookeeper
           image: confluentinc/cp-zookeeper:7.5.0
           ports:
             - containerPort: 2181
+          livenessProbe:
+            tcpSocket:
+              port: 2181
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            failureThreshold: 10
+          readinessProbe:
+            tcpSocket:
+              port: 2181
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 10
           env:
             - name: ZOOKEEPER_CLIENT_PORT
               value: "2181"

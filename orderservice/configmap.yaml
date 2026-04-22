@@ -8,5 +8,4 @@ data:
   SPRING_DATASOURCE_URL: "jdbc:postgresql://orderservice-postgres:5432/orderservicedb"
   SPRING_DATASOURCE_USERNAME: "user"
   USER_SERVICE_URL: "http://userservice-app:8080"
-  GATEWAY_URL: "http://localhost:8080"
   SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"

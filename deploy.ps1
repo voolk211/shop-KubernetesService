@@ -1,3 +1,11 @@
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host " Prerequisites: secret.yaml files required  " -ForegroundColor Cyan
+Write-Host " Run once before first deploy:               " -ForegroundColor Cyan
+Write-Host "   Copy-Item */secret.example.yaml -> */secret.yaml" -ForegroundColor Cyan
+Write-Host "   Then fill in real credentials            " -ForegroundColor Cyan
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host ""
+
 Write-Host "Enabling ingress addon..."
 minikube addons enable ingress
 
@@ -30,6 +38,30 @@ kubectl apply -f kafka/broker/service.yaml
 
 Write-Host "Waiting 90s for Kafka..."
 Start-Sleep -Seconds 90
+
+Write-Host "Step 3: Checking Secrets..."
+
+$services = @("userservice", "authservice", "orderservice", "paymentservice", "apigatewayservice")
+$missingSecrets = @()
+
+foreach ($svc in $services) {
+    if (-not (Test-Path "$svc/secret.yaml")) {
+        $missingSecrets += $svc
+    }
+}
+
+if ($missingSecrets.Count -gt 0) {
+    Write-Host ""
+    Write-Host "ERROR: secret.yaml not found for: $($missingSecrets -join ', ')" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "Please create secret.yaml files from the examples:" -ForegroundColor Yellow
+    foreach ($svc in $missingSecrets) {
+        Write-Host "  Copy-Item $svc/secret.example.yaml $svc/secret.yaml" -ForegroundColor Cyan
+    }
+    Write-Host ""
+    Write-Host "Then fill in the actual values and re-run the script." -ForegroundColor Yellow
+    exit 1
+}
 
 Write-Host "Step 3: Deploying ConfigMaps and Secrets..."
 kubectl apply -f userservice/configmap.yaml
