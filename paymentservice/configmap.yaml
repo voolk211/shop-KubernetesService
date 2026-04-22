@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: paymentservice-app-configmap
+data:
+  SPRING_PROFILES_ACTIVE: "docker"
+  PAYMENT_SERVICE_PORT: "8080"
+  EXTERNAL_API_URL: "https://www.randomnumberapi.com/api/v1.0"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"

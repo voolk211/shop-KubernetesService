@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: userservice-app-configmap
+data:
+  SPRING_PROFILES_ACTIVE: "docker"
+  USER_SERVICE_PORT: "8080"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://userservice-postgres:5432/userservicedb"
+  SPRING_DATASOURCE_USERNAME: "user"
+  SPRING_REDIS_HOST: "userservice-redis"
+  SPRING_REDIS_PORT: "6379"

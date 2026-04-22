@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderservice-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orderservice-app
+  template:
+    metadata:
+      labels:
+        app: orderservice-app
+    spec:
+      containers:
+        - name: orderservice-app
+          image: orderservice-app:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: orderservice-app-configmap
+            - secretRef:
+                name: orderservice-app-secret
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            failureThreshold: 10
+            periodSeconds: 60
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 15
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 500m
+            limits:
+              memory: 768Mi
+              cpu: 1000m
